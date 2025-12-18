@@ -1,0 +1,22 @@
+name: Deploy Telegram Scraper
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, telegram-scraper]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build & Deploy
+        run: |
+          docker build . -t telegram-scraper:latest
+          docker stop telegram-scraper || true
+          docker rm telegram-scraper || true
+          docker run -d \
+            --name telegram-scraper \
+            --restart always \
+            --env-file .env \
+            telegram-scraper:latest
+          echo "Telegram Scraper deployed!"

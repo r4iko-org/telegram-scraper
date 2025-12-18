@@ -1,0 +1,33 @@
+{
+  "devDependencies": {
+    "@types/node": "^25.0.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "axios": "^1.13.2",
+    "dotenv": "^17.2.3",
+    "telegram": "^2.26.22"
+  },
+  "name": "telegram-scraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/app.js",
+    "dev": "ts-node src/app.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/r4iko-org/telegram-scraper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/r4iko-org/telegram-scraper/issues"
+  },
+  "homepage": "https://github.com/r4iko-org/telegram-scraper#readme"
+}
