@@ -1,63 +1,146 @@
-Telegram Scraper
-Lightweight real-time scraper for public Telegram channels.
-Built with Node.js, TypeScript and GramJS (MTProto user client – not a bot).
-Listens to multiple public channels and forwards every new message to your webhook URL instantly.
-Features
+# 📡 Telegram Scraper – Lightweight Real-time MTProto Listener
 
-Real-time message listening (event-driven)
-Multiple channels support
-In-memory queue with retry (3 attempts)
-Duplicate protection via Telegram message ID
-Max 100 pending messages (memory-safe)
-No Redis or external services required
-Docker-ready
-Configured via .env
+A lightweight real-time scraper for public Telegram channels.
+Built using Node.js + TypeScript + GramJS (MTProto user client — not a bot).
+Listens to multiple channels and forwards new messages instantly to your webhook URL.
 
-Security Warning
-This tool uses your personal Telegram account.
-The SESSION_STRING gives full access to your account.
-Never share or commit your .env file.
-Requirements
+---
 
-Node.js ≥ 20
-Telegram account
-API credentials from https://my.telegram.org/apps
+## ✨ Features
 
-Setup
-Clone & install
-textgit clone https://github.com/yourusername/telegram-scraper.git
+- Real-time message listening (event-driven)
+- Multiple public channels supported
+- In-memory message queue
+- Retry system (3 attempts)
+- Duplicate message protection (via Telegram message ID)
+- Memory-safe queue limit (max 100 pending)
+- No Redis / no external services required
+- Docker-ready container
+- Fully configurable via `.env`
+
+---
+
+## ⚠ Security Warning
+
+This tool uses your personal Telegram account session.
+
+Your `.env` contains:
+
+```
+SESSION_STRING
+```
+
+This grants full control of your Telegram account, including messages and contacts.
+
+Never commit `.env` to git.
+Never share it with anyone.
+Store safely in your deployment environment.
+
+---
+
+## 📦 Requirements
+
+- Node.js ≥ 20
+- Telegram API credentials from https://my.telegram.org/apps
+
+---
+
+## 🚀 Installation
+
+```bash
+git clone https://github.com/yourusername/telegram-scraper.git
 cd telegram-scraper
-npm install   # or yarn install
-Create .env
-textcp .env.example .env
-Fill .env (get API_ID & API_HASH from https://my.telegram.org/apps)
-textAPI_ID=your_id
+npm install
+```
+
+---
+
+## ⚙ Configuration
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env`:
+
+```env
+API_ID=your_id
 API_HASH=your_hash
 PHONE_NUMBER=+1234567890
 SESSION_STRING=
+
 CHANNELS=@channel1,@channel2
 WEBHOOK_URL=http://localhost:3000/webhook
-Join the channels with your Telegram account (required to receive messages).
-Run
-textnpm run dev   # or yarn dev
+```
 
-First run: enter verification code (and 2FA if enabled)
-Copy printed SESSION_STRING → add to .env
-Restart → auto-login
+Ensure your Telegram account joined each channel.
 
-Test Webhook (optional)
-Quick local test server:
-textnpx express-generator test --no-view
+---
+
+## ▶ First Run
+
+```bash
+npm run dev
+```
+
+The CLI will ask for:
+
+- login verification code
+- 2FA password if enabled
+
+Copy printed `SESSION_STRING` and paste into `.env`.
+Restart:
+
+```bash
+npm run dev
+```
+
+---
+
+## 🧪 Optional Webhook Test Server
+
+```bash
+npx express-generator test --no-view
 cd test && npm install
-# add in app.js:
+```
+
+Inside `app.js` add:
+
+```js
 app.post('/webhook', (req, res) => {
-  console.log('Message:', req.body);
+  console.log('Message received:', req.body);
   res.sendStatus(200);
 });
+```
+
+Start server:
+
+```bash
 npm start
-Docker
-textdocker build -t telegram-scraper .
-docker run -d --name scraper --restart always --env-file .env telegram-scraper
-License
-MIT
-Use responsibly and respect Telegram's ToS.
+```
+
+---
+
+## 🐳 Docker Deployment
+
+Build image:
+
+```bash
+docker build -t telegram-scraper .
+```
+
+Run container:
+
+```bash
+docker run -d \
+  --name scraper \
+  --restart always \
+  --env-file .env \
+  telegram-scraper
+```
+
+---
+
+## 📜 License
+
+MIT License. Use responsibly and comply with Telegram Terms of Service.
